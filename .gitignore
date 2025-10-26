@@ -1,0 +1,5 @@
+avoda-website/node_modules/
+*.log
+.env
+dist/
+build/
