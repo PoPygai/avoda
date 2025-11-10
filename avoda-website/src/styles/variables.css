@@ -25,11 +25,8 @@
 
 /*todo*/
 :root {
-    --bg-color: #132e35;
-    --dark-bg-color: #0f1e23;
-    --alternative-bg-color: #2c4951;
+    --bg-color: #FF6600;
+    --alternate-bg-color: #ff5900;
     --color-text: white;
     --color-text-gray: #abaeb5;
-    --medium-title-size: clamp(12px,1.35vw,36px);
-    --little-title-size: clamp(10px,0.9vw,24px);
 }

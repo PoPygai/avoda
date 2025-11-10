@@ -1,11 +1,11 @@
+import Header from "./pages/header/Header.tsx";
 
-import './App.css'
 
 function App() {
 
   return (
     <>
-      This is App Component
+      <Header />
     </>
   )
 }
