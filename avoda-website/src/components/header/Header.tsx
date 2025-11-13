@@ -33,7 +33,7 @@ const Header = () => {
                 }
                 setArrButtonsOfBurger(arr);
             } else {
-                setArrButtonsOfBurger([]); 
+                setArrButtonsOfBurger([]);
             }
         };
 
@@ -51,36 +51,36 @@ const Header = () => {
     return (
         <header className='header'>
             <h2 className="header-title">
-                <a className="header-title__link" href="/">avoda</a>
+                <a className="header-title__link " href="/avoda-website/public">avoda</a>
             </h2>
 
             <nav className="header-menu">
-                <a className="header-menu__button" href="#">Create Resume</a>
+                <a className="header-menu__button btn" href="#">Create Resume</a>
                 <ul className="menu-list">
                     <li className="menu-list-item">
                         <a href="" className="menu-list__link">
                             {/*todo add logic*/}
-                            <img src="public/icons/search.png" alt="search" className="menu-list__img"/>
+                            <img src="public/icons/search.png" alt="search" className="menu-list__img" loading="lazy"/>
                         </a>
                     </li>
                     <li className="menu-list-item">
                         <a href="" className="menu-list__link">
-                            <img src="public/icons/coment.png" alt="move to chats" className="menu-list__img"/>
+                            <img src="public/icons/coment.png" alt="move to chats" className="menu-list__img" loading="lazy"/>
                         </a>
                     </li>
                     <li className="menu-list-item">
                         <a href="" className="menu-list__link">
-                            <img src="public/icons/bell.png" alt="see message from companies" className="menu-list__img"/>
+                            <img src="public/icons/bell.png" alt="see message from companies" className="menu-list__img" loading="lazy"/>
                         </a>
                     </li>
                     <li className="menu-list-item">
                         <a href="" className="menu-list__link">
-                            <img src="public/icons/user.png" alt="move to acoount setting" className="menu-list__img"/>
+                            <img src="public/icons/user.png" alt="move to acoount setting" className="menu-list__img" loading="lazy"/>
                         </a>
                     </li>
                     <li ref={refBurger} className="menu-list-item burger-wrapper" >
-                        <a href="/" className="menu-list__link " onClick={handleClick}>
-                            <img src="public/icons/menu.png" alt="tools button" className="menu-list__img"/>
+                        <a href="/avoda-website/public" className="menu-list__link " onClick={handleClick}>
+                            <img src="public/icons/menu.png" alt="tools button" className="menu-list__img" loading="lazy"/>
                         </a>
                         <ul ref={refListMenu} className={`burger-list hidden-menu`}>
                             {

@@ -29,15 +29,8 @@
     aspect-ratio: 1;
 }
 
-.header-menu__button{
-    display: block;
-    padding: 15px 20px;
-    border-radius: 20px;
-    background: var(--alternate-bg-color);
-}
 .header-menu__button:hover{
-    transition-duration:  0.4s;
-    box-shadow: 3px 3px 20px #000;
+    /*box-shadow: 1px 1px 4px #000;*/
 }
 .burger-wrapper{
     position: relative;

@@ -30,3 +30,18 @@
     --color-text: white;
     --color-text-gray: #abaeb5;
 }
+
+
+.btn{
+    border:  none;
+    padding: 15px 20px;
+    border-radius: 20px;
+    background: var(--alternate-bg-color);
+    color : var(--color-text-gray);
+}
+
+
+.btn:hover{
+    color : var(--color-text);
+}
+

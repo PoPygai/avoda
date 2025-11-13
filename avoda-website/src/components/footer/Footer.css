@@ -1,0 +1,38 @@
+.footer{
+    min-width: 100vw;
+    position: absolute;
+    bottom: 0;
+    background: var(--bg-color);
+}
+.footer-wrapper{
+    padding: clamp(15px ,1.56vw,35px);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.footer-menu{
+    display: flex;
+    column-gap: 7.29vw;
+    align-items: center;
+
+}
+.footer-menu-list-item__link{
+    color:var(--color-text-gray);
+    font-size: clamp(10px,0.83vw,18px );
+}
+.footer-menu-list-item__link:hover{
+    color:var(--color-text);
+}
+.watermark{
+    font-size: clamp(14px,1vw,20px );
+
+}
+
+.footer-icons-menu{
+    display: flex;
+    column-gap:  20px;
+}
+.icons-menu-item__img{
+    width: clamp(25px,2.08vw,40px);
+    aspect-ratio: 1;
+}
