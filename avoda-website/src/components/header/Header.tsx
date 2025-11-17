@@ -51,7 +51,7 @@ const Header = () => {
     return (
         <header className='header'>
             <h2 className="header-title">
-                <a className="header-title__link " href="/avoda-website/public">avoda</a>
+                <a className="header-title__link " href="/">avoda</a>
             </h2>
 
             <nav className="header-menu">

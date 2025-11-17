@@ -19,17 +19,16 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
 
 
-
-/*todo*/
-:root {
+    /*==========================================================*/
     --bg-color: #FF6600;
     --alternate-bg-color: #ff5900;
     --color-text: white;
+    --color-text-black: black;
     --color-text-gray: #abaeb5;
 }
+
 
 
 .btn{
@@ -42,6 +41,7 @@
 
 
 .btn:hover{
+    cursor: pointer;
     color : var(--color-text);
 }
 

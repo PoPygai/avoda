@@ -1,24 +1,41 @@
 .main{
     padding-block: 40px;
 }
-
+/*=================================================FORM=================================*/
 .main-form{
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 1.04vw;
+    margin-bottom: 20px;
 }
 .form-title{
     text-align: center;
     width: 100vw;
     color:var(--color-text-gray);
+    font-size: clamp(16px,1.25vw,28px);
 }
 .form-inp{
     border: none;
-    width: 500px;
+    width: clamp(220px,40.04vw,600px);
     border-radius: 20px;
     background: var(--color-text-gray);
     padding-left: 10px;
+
+    height: clamp(48px,4vw,80px);
+}
+.form-button{
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    max-width: 48px;
+    max-height: 48px;
+}
+.form-img{
+    max-width: 48px;
+    aspect-ratio: 1;
 }
 .form-btn{
     box-shadow: 3px 5px  1px var(--color-text-gray);
@@ -29,4 +46,21 @@
     left:3px;
     transition-duration:  0.2s;
     box-shadow: 1px 2px  1px var(--color-text-gray);
+}
+/*==============================================JOB===============================================*/
+.main-wrapper{
+    position: relative;
+    display: flex;
+    min-height: 80vh;
+}
+.main-sidebar{
+    width: 25vw;
+    background: var(--alternate-bg-color);
+}
+.job{
+    padding-left: 10px;
+    width: 75vw;
+}
+.job-title{
+    color: var(--color-text-black);
 }
