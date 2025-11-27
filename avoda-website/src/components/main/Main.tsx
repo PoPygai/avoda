@@ -32,7 +32,7 @@ const Main = () => {
         <div className="main">
             <form className="main-form"  action="#" onSubmit={(event) => handleSumbit(event)}>
                 <h2 className="form-title " >What kind of job do you want to find?</h2>
-                <input ref={refTitleJob} className="form-inp" name="job"  type="text" placeholder="Enter Job do you want to find?" required={true} minLength={3} maxLength={55} />
+                <input ref={refTitleJob} className="form-inp" name="job"  type="text" placeholder="Enter Job do you want to find?" required minLength={3} maxLength={55} />
                 <button className="form-button" onClick={goToEditRequest}><img className="form-img" src="public/icons/settingsRequire.png" alt="settings of vacation"/></button>
                 <button  className="form-btn btn" type="submit" >Find</button>
             </form>
