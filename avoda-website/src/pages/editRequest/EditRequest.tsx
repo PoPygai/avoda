@@ -1,76 +1,163 @@
 import "./EditRequest.css";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {FormEvent, useState} from "react";
 const EditRequest = () => {
     const location = useLocation();
     const job = location.state?.job;
+    // todo make normal arrayCities
+    const suggestions = [""];
+    const [text, setText] = useState("");
+    const [filtered, setFiltered] = useState<string[]>([]);
+    const navigate = useNavigate();
+
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value;
+        setText(value);
+
+        if (value.trim() === "") {
+            setFiltered([]);
+            return;
+        }
+
+        const result = suggestions.filter(item =>
+            item.toLowerCase().includes(value.toLowerCase())
+        );
+
+        setFiltered(result);
+    }
+
+    function handleSelect(value: string) {
+        setText(value);
+        setFiltered([]);
+    }
 
 
-    // todo all selects write by map maybe
+    const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const title = (form.elements.namedItem("title-job") as HTMLInputElement).value;
+        const region = (form.elements.namedItem("region") as HTMLInputElement).value;
+        const salary = (form.elements.namedItem("salary") as HTMLInputElement).value;
+        const data = new FormData(event.currentTarget);
+
+        const payoutFrequency = data.getAll("frequency");
+        const experience = data.getAll("experience");
+        const employmentType = data.getAll("employment");
+
+
+        console.log(experience);
+        console.log(employmentType)
+        console.log(payoutFrequency)
+
+        navigate("/", {
+            state: {
+                title,
+                region,
+                salary,
+                employmentType,
+                experience,
+                payoutFrequency,
+            }
+        })
+    }
+
+
+
+
     return (
         <div className="wrapper-request">
-            <form className="request-form" action="#">
+            <form className="request-form" action="#" onSubmit={(event)=>handleSubmit(event)}>
                 <h2 className="request-form__title">Find vacation</h2>
-                <label className="request-form__title-job title-medium" htmlFor="title-job">words which need to find</label>
-                {/*ref ???*/}
-                <input className="input-edit" type="text" placeholder="title of vacation" id="title-job" defaultValue={job} name="title-job" required/>
 
-                <label htmlFor="region" className="request-form-region__title title-medium">Region/City</label>
-                <select name="region" id="region" className="request-form-region edit-select">
-                    {/*todo map and can in input choose and write*/}
-                    <option className=" edit-select" value="default" disabled selected>all of israel</option>
-                    <option className="request-form-select__option edit-select" value="haifa">Haifa</option>
-                    <option className="request-form-select__option edit-select" value="tel-aviv">Tel-Aviv</option>
-                    <option className="request-form-select__option edit-select" value="ako">Ako</option>
-                </select>
+                <label className="request-form__title-job title-medium" htmlFor="title-job">Words which need to find</label>
+                <input className="input-edit input-big" type="text" placeholder="title of vacation" id="title-job" defaultValue={job} name="title-job" required/>
+                <br/>
+
+
+                <div className="autocomplete-wrapper">
+                    <label htmlFor="region" className="request-form-region__title title-medium">Region/City</label>
+
+                    <input
+                        className="input-edit input-big t"
+                        type="text"
+                        value={text}
+                        onChange={handleChange}
+                        placeholder="Enter job title"
+                        id="region"
+                        name="region"
+                    />
+                    {filtered.length > 0 && (
+                        <ul className="autocomplete-list">
+                            {filtered.map(item => (
+                                <li key={item} onClick={() => handleSelect(item)} className="autocomplete-item">
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                );
+
+                <br/>
 
                 <label htmlFor="salary" className="request-form-salary title-medium">Salary</label>
-                <input className="request-form-salary__inp input-edit" type="number" min={0} max={999999} placeholder="salary" id="salary" name="salary"/>
+                <input className="request-form-salary__inp input-edit input-big" type="text"  min={0} max={999999} placeholder="salary" id="salary" name="salary"/>
 
                 <div className="request-form-wrapper">
                     <h3 className="request-form-frequency__title title-medium">Payout frequency</h3>
-                    <label className="request-form-frequency">
-                        <input type="radio" className="request-form-frequency__inp edit-radio" name="frequency"  value="day"/>Day
-                    </label>
-                    <label className="request-form-frequency">
-                        <input type="radio" className="request-form-frequency__inp edit-radio" name="frequency"  value="week"/>Week
-                    </label>
-                    <label className="request-form-frequency">
-                        <input type="radio" className="request-form-frequency__inp edit-radio" name="frequency"  value="month"/>Month
-                    </label>
-                    <label className="request-form-frequency">
-                        <input type="radio" className="request-form-frequency__inp edit-radio" name="frequency"  value="forWork"/>For Work
-                    </label>
+                    <div className="request-container">
+                        <label className="request-form-frequency request-form-label">
+                            <input type="checkbox" className="request-form-frequency__inp edit-checkbox" name="frequency"  value="day"/>Day
+                        </label>
+                        <label className="request-form-frequency request-form-label">
+                            <input type="checkbox" className="request-form-frequency__inp edit-checkbox" name="frequency"  value="week"/>Week
+                        </label>
+                        <label className="request-form-frequency request-form-label">
+                            <input type="checkbox" className="request-form-frequency__inp edit-checkbox" name="frequency"  value="month"/>Month
+                        </label>
+                        <label className="request-form-frequency request-form-label">
+                            <input type="checkbox" className="request-form-frequency__inp edit-checkbox" name="frequency"  value="forWork"/>For Work
+                        </label>
+                    </div>
+                </div>
+                <div className="request-form-wrapper">
+                    <h3 className="request-form-experience__title title-medium">Required work experience</h3>
+                    <div className="request-container">
+                        <label className="request-form-experience request-form-label">
+                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="dontCare"/>Dont Care
+                        </label>
+                        <label className="request-form-experience request-form-label">
+                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="notExp"/>Not Experience
+                        </label>
+                        <label className="request-form-experience request-form-label">
+                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="f1t3"/>from 1 year to 3 years
+                        </label>
+                        <label className="request-form-experience request-form-label">
+                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="f3t6"/>from 3 year to 6 years
+                        </label>
+                        <label className="request-form-experience request-form-label">
+                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="more6"/>more 6 years
+                        </label>
+                    </div>
                 </div>
 
-            {/*<label htmlFor="frequency" className="label-edit">Payout frequency</label>*/}
-            {/*<select name="frequency" id="frequency" className="request-form-frequency edit-select">*/}
-                {/*    <option className="edit-select" value="default" disabled selected>none</option>*/}
-                {/*    <option className="request-form-frequency__option edit-select" value="day">Day</option>*/}
-                {/*    <option className="request-form-frequency__option edit-select" value="week">Week</option>*/}
-                {/*    <option className="request-form-frequency__option edit-select" value="month">Month</option>*/}
-                {/*    <option className="request-form-frequency__option edit-select" value="forWork">For Work</option>*/}
-                {/*</select>*/}
+                <div className="request-form-wrapper">
+                    <h3 className="request-form-employment__title title-medium">Employment type</h3>
+                    <div className="request-container">
+                        <label className="request-form-employment request-form-label">
+                            <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment"  value="fulltime"/>Full-time employment
+                        </label>
+                        <label className="request-form-employment request-form-label">
+                            <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment"  value="privateEmp"/>Private employment
+                        </label>
+                        <label className="request-form-employment request-form-label">
+                            <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment"  value="partTime"/>Part-time employment
+                        </label>
+                    </div>
+                </div>
 
-                <label htmlFor="experience">Required work experience</label>
-                <select name="experience" id="experience" className="request-form-experience edit-select">
-                    <option className="edit-select" value="default" disabled selected>dont care</option>
-                    <option className="request-form-experience__option edit-select" value="notExperience">Not
-                        Experience
-                    </option>
-                    <option className="request-form-experience__option edit-select" value="year1Toyear3">from 1 year to
-                        3 years
-                    </option>
-                    <option className="request-form-experience__option edit-select" value="year3Toyear6">from 3 year to
-                        6 years
-                    </option>
-                    <option className="request-form-experience__option edit-select" value="more6year">more 6 years
-                    </option>
-                </select>
-
-                <label htmlFor="employment">Employment type</label>
-                <select name="employment" id="employment" className="request-form-employee edit-select">
-                    <option className="edit-select" value="default" disabled selected>none</option>
-                </select>
+                <button className="request-form__btn" type="submit">Find!</button>
             </form>
         </div>
     );

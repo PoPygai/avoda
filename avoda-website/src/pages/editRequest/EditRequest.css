@@ -1,4 +1,71 @@
 .request-form{
-    background: grey;
+    padding: 30px 100px;
+}
+
+.request-form > option,input,label,.request-form__title {
+    color: var(--color-text-black);
+}
+
+.request-form__title{
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+.request-form-label{
+    font-size: 20px;
 
 }
+.request-form-wrapper{
+    margin-bottom: 50px;
+}
+
+
+.input-edit{
+    margin-left: 80px;
+    margin-bottom: 50px;
+}
+.request-form-region{
+    margin-bottom: 50px;
+}
+
+.request-container{
+    display: flex;
+    flex-direction: column;
+}
+
+/*todo same margin from input*/
+.autocomplete-wrapper {
+    position: relative;
+    display: inline-block;
+
+}
+
+
+
+.autocomplete-list {
+    position: absolute;
+    top: 60%;
+    right: 0;
+    width: clamp(220px,40.04vw,600px);
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 4px;
+    padding: 0;
+    z-index: 100;
+}
+
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    color: var(--color-text-black);
+}
+
+.autocomplete-item:hover {
+    background: #eee;
+}
+
+.request-form__btn{
+    padding: 15px 20px;
+    color: var(--color-text-black);
+}
+

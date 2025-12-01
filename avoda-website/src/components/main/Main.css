@@ -16,15 +16,7 @@
     color:var(--color-text-gray);
     font-size: clamp(16px,1.25vw,28px);
 }
-.form-inp{
-    border: none;
-    width: clamp(220px,40.04vw,600px);
-    border-radius: 20px;
-    background: var(--color-text-gray);
-    padding-left: 10px;
 
-    height: clamp(48px,4vw,80px);
-}
 .form-button{
     cursor: pointer;
     border: none;
