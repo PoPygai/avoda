@@ -1,5 +1,7 @@
 export type RequestParaments={
     title:string,
+
+    //todo  will change to string[]
     region:string,
     salary:number,
     employmentType:string[],

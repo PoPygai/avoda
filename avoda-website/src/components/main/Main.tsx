@@ -2,6 +2,9 @@ import "./Main.css";
 import {FormEvent, useEffect, useRef, useState} from "react";
 import JobsList from "./JobsList.tsx";
 import {useLocation, useNavigate} from "react-router-dom";
+import AsideJobList from "./AsideJobList.tsx";
+
+
 
 const Main = () => {
     const [titleJob, setTitleJob] = useState<string>();
@@ -50,9 +53,8 @@ const Main = () => {
             </form>
             {visible &&
                 <div className={"main-wrapper"}>
-                    <aside className="main-sidebar">
 
-                    </aside>
+                    <AsideJobList paraments={location.state} />
                     <JobsList titleJob={titleJob} paraments={location.state} />
                 </div>
             }

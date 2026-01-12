@@ -1,30 +1,29 @@
 import "./EditRequest.css";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
+import {REGIONS} from "../../utils/tools.ts";
 const EditRequest = () => {
     const location = useLocation();
     const job = location.state?.job;
     // todo make normal arrayCities
-    const suggestions = [""];
     const [text, setText] = useState("");
     const [filtered, setFiltered] = useState<string[]>([]);
     const navigate = useNavigate();
 
+
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value;
         setText(value);
-
         if (value.trim() === "") {
             setFiltered([]);
             return;
         }
-
-        const result = suggestions.filter(item =>
+        const result = REGIONS.filter(item =>
             item.toLowerCase().includes(value.toLowerCase())
         );
-
         setFiltered(result);
     }
+
 
     function handleSelect(value: string) {
         setText(value);
@@ -37,6 +36,7 @@ const EditRequest = () => {
 
         const form = event.currentTarget;
         const title = (form.elements.namedItem("title-job") as HTMLInputElement).value;
+        //todo  will change to string[]
         const region = (form.elements.namedItem("region") as HTMLInputElement).value;
         const salary = (form.elements.namedItem("salary") as HTMLInputElement).value;
         const data = new FormData(event.currentTarget);
@@ -46,9 +46,7 @@ const EditRequest = () => {
         const employmentType = data.getAll("employment");
 
 
-        console.log(experience);
-        console.log(employmentType)
-        console.log(payoutFrequency)
+
 
         navigate("/", {
             state: {
@@ -108,16 +106,16 @@ const EditRequest = () => {
                     <h3 className="request-form-frequency__title title-medium">Payout frequency</h3>
                     <div className="request-container">
                         <label className="request-form-frequency request-form-label">
-                            <input type="checkbox" className="request-form-frequency__inp edit-checkbox" name="frequency"  value="day"/>Day
+                            <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value="day"/>Day
                         </label>
                         <label className="request-form-frequency request-form-label">
-                            <input type="checkbox" className="request-form-frequency__inp edit-checkbox" name="frequency"  value="week"/>Week
+                            <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value="week"/>Week
                         </label>
                         <label className="request-form-frequency request-form-label">
-                            <input type="checkbox" className="request-form-frequency__inp edit-checkbox" name="frequency"  value="month"/>Month
+                            <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value="month"/>Month
                         </label>
                         <label className="request-form-frequency request-form-label">
-                            <input type="checkbox" className="request-form-frequency__inp edit-checkbox" name="frequency"  value="forWork"/>For Work
+                            <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value="forWork"/>For Work
                         </label>
                     </div>
                 </div>
@@ -125,19 +123,19 @@ const EditRequest = () => {
                     <h3 className="request-form-experience__title title-medium">Required work experience</h3>
                     <div className="request-container">
                         <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="dontCare"/>Dont Care
+                            <input type="radio" className="request-form-experience__inp " name="experience"  value="dontCare"/>Dont Care
                         </label>
                         <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="notExp"/>Not Experience
+                            <input type="radio" className="request-form-experience__inp " name="experience"  value="notExp"/>Not Experience
                         </label>
                         <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="f1t3"/>from 1 year to 3 years
+                            <input type="radio" className="request-form-experience__inp " name="experience"  value="f1t3"/>from 1 year to 3 years
                         </label>
                         <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="f3t6"/>from 3 year to 6 years
+                            <input type="radio" className="request-form-experience__inp " name="experience"  value="f3t6"/>from 3 year to 6 years
                         </label>
                         <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp edit-radio" name="experience"  value="more6"/>more 6 years
+                            <input type="radio" className="request-form-experience__inp " name="experience"  value="more6"/>more 6 years
                         </label>
                     </div>
                 </div>

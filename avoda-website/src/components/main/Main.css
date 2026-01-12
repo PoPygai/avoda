@@ -45,14 +45,33 @@
     display: flex;
     min-height: 80vh;
 }
-.main-sidebar{
-    width: 25vw;
-    background: var(--alternate-bg-color);
-}
+
 .job{
     padding-left: 10px;
     width: 75vw;
 }
 .job-title{
     color: var(--color-text-black);
+}
+/*================================================ASIDE=============================================*/
+.main-sidebar{
+    width: 25vw;
+    background: var(--alternate-bg-color);
+    border-radius: 0 10px 10px 0 ;
+}
+.main-sidebar__form{
+    padding: 10px;
+}
+.main-sidebar-label{
+    font-size: 20px;
+    color: var(--color-text);
+}
+.main-sidebar__containers{
+
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.main-sidebar h4{
+    color: var(--color-text);
 }

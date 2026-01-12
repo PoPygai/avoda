@@ -9,3 +9,10 @@ export const handleDocumentClick = (e: MouseEvent,refBurger: React.RefObject<HTM
         refListMenu.current?.classList.add("hidden-menu");
     }
 };
+
+export  const REGIONS =["Haifa","Tel-aviv","Akko"];
+// export enum REGIONS{
+//     HAIFA = 'Haifa',
+//     TELAVIV = 'Tel-avai',
+// }
+export const Frequency=["Day","Week","Month","For work"];
