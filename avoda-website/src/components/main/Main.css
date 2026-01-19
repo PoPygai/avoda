@@ -70,8 +70,11 @@
 
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 .main-sidebar h4{
     color: var(--color-text);
+}
+.main-sidebar h4{
+    margin-bottom: 6px;
 }

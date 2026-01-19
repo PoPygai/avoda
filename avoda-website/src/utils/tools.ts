@@ -10,9 +10,26 @@ export const handleDocumentClick = (e: MouseEvent,refBurger: React.RefObject<HTM
     }
 };
 
-export  const REGIONS =["Haifa","Tel-aviv","Akko"];
-// export enum REGIONS{
-//     HAIFA = 'Haifa',
-//     TELAVIV = 'Tel-avai',
-// }
-export const Frequency=["Day","Week","Month","For work"];
+export const regionsValues = [
+    { title: "Haifa", value: "haifa" },
+    { title: "Tel-aviv", value: "tel-aviv" },
+    { title: "Akko", value: "akko" }
+]
+export const frequencyValues = [
+    { title: "Day", value: "day" },
+    { title: "Week", value: "week" },
+    { title: "Month", value: "month" },
+    { title: "For work", value: "work" },
+]
+export const experienceValues = [
+    { title: "No experience", value: "no_experience" },
+    { title: "0–1 year", value: "junior" },
+    { title: "1–3 years", value: "middle" },
+    { title: "3+ years", value: "senior" },
+    { title: "Don’t care", value: "any" },
+]
+export const employmentValues = [
+    { title: "Full-time employment", value: "fulltime" },
+    { title: "Private employment", value: "employment-private" },
+    { title: "Part-time employment", value: "part-time" },
+]

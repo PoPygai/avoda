@@ -1,7 +1,7 @@
 import "./EditRequest.css";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
-import {REGIONS} from "../../utils/tools.ts";
+import {experienceValues, frequencyValues, regionsValues} from "../../utils/tools.ts";
 const EditRequest = () => {
     const location = useLocation();
     const job = location.state?.job;
@@ -18,9 +18,8 @@ const EditRequest = () => {
             setFiltered([]);
             return;
         }
-        const result = REGIONS.filter(item =>
-            item.toLowerCase().includes(value.toLowerCase())
-        );
+        const result = regionsValues.filter(item =>
+            item.value.includes(value)).map(item => item.title);
         setFiltered(result);
     }
 
@@ -105,38 +104,26 @@ const EditRequest = () => {
                 <div className="request-form-wrapper">
                     <h3 className="request-form-frequency__title title-medium">Payout frequency</h3>
                     <div className="request-container">
-                        <label className="request-form-frequency request-form-label">
-                            <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value="day"/>Day
-                        </label>
-                        <label className="request-form-frequency request-form-label">
-                            <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value="week"/>Week
-                        </label>
-                        <label className="request-form-frequency request-form-label">
-                            <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value="month"/>Month
-                        </label>
-                        <label className="request-form-frequency request-form-label">
-                            <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value="forWork"/>For Work
-                        </label>
+                        {
+                            frequencyValues.map((value,i)=>
+                                <label className="request-form-frequency request-form-label" key={i}>
+                                    <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value={value.value}/>{value.title}
+                                </label>
+                            )
+                        }
                     </div>
                 </div>
                 <div className="request-form-wrapper">
                     <h3 className="request-form-experience__title title-medium">Required work experience</h3>
                     <div className="request-container">
-                        <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp " name="experience"  value="dontCare"/>Dont Care
-                        </label>
-                        <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp " name="experience"  value="notExp"/>Not Experience
-                        </label>
-                        <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp " name="experience"  value="f1t3"/>from 1 year to 3 years
-                        </label>
-                        <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp " name="experience"  value="f3t6"/>from 3 year to 6 years
-                        </label>
-                        <label className="request-form-experience request-form-label">
-                            <input type="radio" className="request-form-experience__inp " name="experience"  value="more6"/>more 6 years
-                        </label>
+                        {
+                            experienceValues.map((value,i)=>
+                                <label className="request-form-experience request-form-label" key={i}>
+                                    <input type="radio" className="request-form-experience__inp " name="experience"  value={value.value}/>{value.title}
+                                </label>
+                            )
+                        }
+
                     </div>
                 </div>
 
