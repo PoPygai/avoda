@@ -1,13 +1,9 @@
-import React from "react";
-import {RequestParaments} from "../../utils/types.ts";
 import {employmentValues, experienceValues, frequencyValues, regionsValues} from "../../utils/tools.ts";
 
 
-type Props = {
-    paraments : RequestParaments
-}
 
-const AsideJobList:React.FC<Props> = ({paraments}) => {
+
+const AsideJobList = () => {
     return (
         <aside className="main-sidebar">
             <form action="#" className="main-sidebar__form">

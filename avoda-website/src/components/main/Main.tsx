@@ -1,24 +1,26 @@
 import "./Main.css";
 import {FormEvent, useEffect, useRef, useState} from "react";
 import JobsList from "./JobsList.tsx";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import AsideJobList from "./AsideJobList.tsx";
+import {MAX_TITLE, MIN_TITLE} from "../../config/constants.ts";
+import {useAppDispatch, useAppSelector} from "../../state/hooks.ts";
+import {requestParamentsSlice} from "../../state/slices/RequestParamentsSlice.ts";
 
 
 
 const Main = () => {
-    const [titleJob, setTitleJob] = useState<string>();
     const [visible, setVisible] = useState<boolean>(false);
     const navigate = useNavigate();
     const refTitleJob = useRef<HTMLInputElement | null>(null);
-    const location = useLocation();
-
+    const dispatch = useAppDispatch();
+    const paraments = useAppSelector(state => state.requestParaments);
+    const {setFieldParaments} = requestParamentsSlice.actions
 
     useEffect(() => {
-        if(location.state?.title){
-            setTitleJob(location.state.title);
+        if(paraments.title){
             setVisible(true);
-            console.log(location.state);
+            console.log(paraments)
         }
 
     },[])
@@ -26,36 +28,32 @@ const Main = () => {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setTitleJob(refTitleJob.current?.value);
+        const value = refTitleJob.current?.value.trim();
+        if(value)
+            dispatch(setFieldParaments({field:"title",value}))
         setVisible(true);
-
     }
 
     function goToEditRequest() {
+        // TODO УЯЗИМОСТИ ТУТ МОГУТ БЫТЬ
         const value = refTitleJob.current?.value.trim();
-
-        // if (!value) {
-        //     alert("Please enter a title");
-        //     return;
-        // }
-
-        navigate("/edit-request", {
-            state: { job: value}
-        });
+        if(value)
+            dispatch(setFieldParaments({field:"title",value}))
+        navigate("/edit-request");
     }
     return (
         <div className="main">
             <form className="main-form"  action="#" onSubmit={(event) => handleSubmit(event)}>
                 <h2 className="form-title " >What kind of job do you want to find?</h2>
-                <input ref={refTitleJob} className="form-inp input-big" name="job"  type="search" placeholder="Enter Job do you want to find?" required minLength={3} maxLength={55} />
+                <input ref={refTitleJob} className="form-inp input-big" name="job"  type="search" placeholder="Enter Job do you want to find?" required minLength={MIN_TITLE} maxLength={MAX_TITLE} />
                 <button className="form-button" onClick={goToEditRequest} type="button"><img className="form-img" src="public/icons/settingsRequire.png" alt="settings of vacation"/></button>
                 <button  className="form-btn btn" type="submit" >Find</button>
             </form>
             {visible &&
                 <div className={"main-wrapper"}>
 
-                    <AsideJobList paraments={location.state} />
-                    <JobsList titleJob={titleJob} paraments={location.state} />
+                    <AsideJobList />
+                    <JobsList  />
                 </div>
             }
 

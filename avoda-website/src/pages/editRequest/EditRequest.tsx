@@ -1,14 +1,22 @@
 import "./EditRequest.css";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
-import {experienceValues, frequencyValues, regionsValues} from "../../utils/tools.ts";
+import {employmentValues, experienceValues, frequencyValues, regionsValues} from "../../utils/tools.ts";
+import {useAppDispatch, useAppSelector} from "../../state/hooks.ts";
+import {requestParamentsSlice} from "../../state/slices/RequestParamentsSlice.ts";
+import {RequestParaments} from "../../utils/types.ts";
 const EditRequest = () => {
-    const location = useLocation();
-    const job = location.state?.job;
     // todo make normal arrayCities
+    // TODO УЯЗИМОСТИ ТУТ МОГУТ БЫТЬ
+    //==================================
     const [text, setText] = useState("");
     const [filtered, setFiltered] = useState<string[]>([]);
+    //==============================
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const {title,region,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
+    const {setAllParaments,setFieldParaments} = requestParamentsSlice.actions
+    //==================================
 
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -38,29 +46,31 @@ const EditRequest = () => {
         //todo  will change to string[]
         const region = (form.elements.namedItem("region") as HTMLInputElement).value;
         const salary = (form.elements.namedItem("salary") as HTMLInputElement).value;
+        const salaryNumber = parseInt(salary) || 0;
         const data = new FormData(event.currentTarget);
 
-        const payoutFrequency = data.getAll("frequency");
-        const experience = data.getAll("experience");
-        const employmentType = data.getAll("employment");
+        const payoutFrequency = data.getAll("frequency").map(v => v.toString());
+        const experience = data.getAll("experience").map(v => v.toString());
+        const employmentType = data.getAll("employment").map(v => v.toString());
 
 
+        dispatch(setAllParaments({title,region,salary : salaryNumber,employmentType,experience,payoutFrequency}))
 
-
-        navigate("/", {
-            state: {
-                title,
-                region,
-                salary,
-                employmentType,
-                experience,
-                payoutFrequency,
-            }
-        })
+        navigate("/")
     }
 
 
+    function handleChangeArray(e: React.ChangeEvent<HTMLInputElement>, array: string[],value:string,field:keyof RequestParaments) {
+        const checked = e.target.checked;
 
+        if (checked) {
+            if (!array.includes(value)) {
+                dispatch(setFieldParaments({field, value: [...array, value]}));
+            }
+        } else {
+            dispatch(setFieldParaments({ field, value: array.filter(el => el !== value) }));
+        }
+    }
 
     return (
         <div className="wrapper-request">
@@ -68,7 +78,7 @@ const EditRequest = () => {
                 <h2 className="request-form__title">Find vacation</h2>
 
                 <label className="request-form__title-job title-medium" htmlFor="title-job">Words which need to find</label>
-                <input className="input-edit input-big" type="text" placeholder="title of vacation" id="title-job" defaultValue={job} name="title-job" required/>
+                <input className="input-edit input-big" type="text" placeholder="title of vacation" id="title-job" defaultValue={title} name="title-job" required/>
                 <br/>
 
 
@@ -87,27 +97,29 @@ const EditRequest = () => {
                     {filtered.length > 0 && (
                         <ul className="autocomplete-list">
                             {filtered.map(item => (
-                                <li key={item} onClick={() => handleSelect(item)} className="autocomplete-item">
+                                <li key={item} onClick={() => handleSelect(item)} className="autocomplete-item" >
                                     {item}
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
-                );
+
 
                 <br/>
 
                 <label htmlFor="salary" className="request-form-salary title-medium">Salary</label>
-                <input className="request-form-salary__inp input-edit input-big" type="text"  min={0} max={999999} placeholder="salary" id="salary" name="salary"/>
+                <input className="request-form-salary__inp input-edit input-big" type="text" defaultValue={salary}  min={0} max={999999} placeholder="salary" id="salary" name="salary"/>
 
                 <div className="request-form-wrapper">
                     <h3 className="request-form-frequency__title title-medium">Payout frequency</h3>
                     <div className="request-container">
                         {
-                            frequencyValues.map((value,i)=>
-                                <label className="request-form-frequency request-form-label" key={i}>
-                                    <input type="checkbox" className="request-form-frequency__inp " name="frequency"  value={value.value}/>{value.title}
+                            frequencyValues.map((value)=>
+                                <label className="request-form-frequency request-form-label" key={value.value}>
+                                    <input type="checkbox" className="request-form-frequency__inp " name="frequency"
+                                           onChange={(e)=>handleChangeArray(e,payoutFrequency,value.value,"payoutFrequency")}
+                                           value={value.value}  checked={payoutFrequency.includes(value.value) } />{value.title}
                                 </label>
                             )
                         }
@@ -117,9 +129,11 @@ const EditRequest = () => {
                     <h3 className="request-form-experience__title title-medium">Required work experience</h3>
                     <div className="request-container">
                         {
-                            experienceValues.map((value,i)=>
-                                <label className="request-form-experience request-form-label" key={i}>
-                                    <input type="radio" className="request-form-experience__inp " name="experience"  value={value.value}/>{value.title}
+                            experienceValues.map((value)=>
+                                <label className="request-form-experience request-form-label" key={value.value}>
+                                    <input type="checkbox" className="request-form-experience__inp " name="experience"
+                                           onChange={(e)=>handleChangeArray(e,experience,value.value,"experience")}
+                                           value={value.value} checked={experience.includes(value.value)}/>{value.title}
                                 </label>
                             )
                         }
@@ -130,15 +144,13 @@ const EditRequest = () => {
                 <div className="request-form-wrapper">
                     <h3 className="request-form-employment__title title-medium">Employment type</h3>
                     <div className="request-container">
-                        <label className="request-form-employment request-form-label">
-                            <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment"  value="fulltime"/>Full-time employment
-                        </label>
-                        <label className="request-form-employment request-form-label">
-                            <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment"  value="privateEmp"/>Private employment
-                        </label>
-                        <label className="request-form-employment request-form-label">
-                            <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment"  value="partTime"/>Part-time employment
-                        </label>
+                        {
+                            employmentValues.map((value)=>
+                                <label className="request-form-employment request-form-label" key={value.value}>
+                                    <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment" onChange={(e)=>handleChangeArray(e,employmentType,value.value,"employmentType")}   value={value.value}  checked={employmentType.includes(value.value)}/>{value.title}
+                                </label>
+                            )
+                        }
                     </div>
                 </div>
 
@@ -146,6 +158,5 @@ const EditRequest = () => {
             </form>
         </div>
     );
-};
-
+}
 export default EditRequest;
