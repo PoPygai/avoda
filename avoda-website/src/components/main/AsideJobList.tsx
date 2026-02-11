@@ -1,9 +1,23 @@
-import {employmentValues, experienceValues, frequencyValues, regionsValues} from "../../utils/tools.ts";
+import {
+    employmentValues,
+    experienceValues,
+    frequencyValues,
+    handleChangeArray,
+    regionsValues
+} from "../../utils/tools.ts";
+import {useAppDispatch, useAppSelector} from "../../state/hooks.ts";
 
 
 
 
 const AsideJobList = () => {
+    const dispatch = useAppDispatch();
+    const {title,region,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
+
+
+    //todo if change value i need to repeat request to db with new params
+    // useEffect(()=>{})
+
     return (
         <aside className="main-sidebar">
             <form action="#" className="main-sidebar__form">
@@ -21,29 +35,33 @@ const AsideJobList = () => {
                 <div className="main-sidebar__frequency main-sidebar__containers">
                     <h4 className="sidebar-frequency-title title-medium">Payout frequency</h4>
                     {
-                        frequencyValues.map((value,i) =>
-                            <label className="sidebar-frequency-label main-sidebar-label" key={i}>
-                                <input type="checkbox" className="sidebar-frequency__inp " name="frequency"  value={value.value}/>{value.title}
-                            </label>
-                        )
+                        frequencyValues.map((value)=>
+                        <label className="sidebar-frequency-label main-sidebar-label" key={value.value}>
+                            <input type="checkbox" className="sidebar-frequency__inp " name="frequency"
+                                   onChange={(e)=>handleChangeArray(e,payoutFrequency,value.value,"payoutFrequency",dispatch)}
+                                   value={value.value}  checked={payoutFrequency.includes(value.value) } />{value.title}
+                        </label>
+                )
                     }
                 </div>
                 <div className="main-sidebar__experience main-sidebar__containers">
                     <h4 className="sidebar-experience-title title-medium">Experience</h4>
                     {
-                        experienceValues.map((value,i) =>
-                        <label className="sidebar-experience-label main-sidebar-label" key={i}>
-                            <input type="checkbox" className="sidebar-experience__inp " name="experience"  value={value.value}/>{value.title}
-                        </label>
+                        experienceValues.map((value) =>
+                                <label className="sidebar-experience-label main-sidebar-label" key={value.value}>
+                                    <input type="checkbox" className="sidebar-experience__inp" name="experience"
+                                           onChange={(e)=>handleChangeArray(e,experience,value.value,"experience",dispatch)}
+                                           value={value.value} checked={experience.includes(value.value)}/>{value.title}
+                                </label>
                         )
                     }
                 </div>
                 <div className="main-sidebar__employment main-sidebar__containers">
                     <h4 className="sidebar-employment-title title-medium">Experience</h4>
                     {
-                        employmentValues.map((value,i) =>
-                            <label className="sidebar-employment-label main-sidebar-label" key={i}>
-                                <input type="checkbox" className="sidebar-employment__inp " name="employment"  value={value.value}/>{value.title}
+                        employmentValues.map((value) =>
+                            <label className="sidebar-employment-label main-sidebar-label" key={value.value}>
+                                <input type="checkbox" className="sidebar-employment__inp" name="employment" onChange={(e)=>handleChangeArray(e,employmentType,value.value,"employmentType",dispatch)}   value={value.value}  checked={employmentType.includes(value.value)}/>{value.title}
                             </label>
                         )
                     }

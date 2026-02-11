@@ -8,3 +8,9 @@ export type RequestParaments={
     experience:string[],
     payoutFrequency:string[],
 }
+
+
+export type ValuesInputRequests = {
+    title: string,
+    value: string,
+}

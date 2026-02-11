@@ -41,6 +41,10 @@ const Main = () => {
             dispatch(setFieldParaments({field:"title",value}))
         navigate("/edit-request");
     }
+
+    //todo if change value i need to repeat request to db with new params
+    // useEffect(()=>{})
+
     return (
         <div className="main">
             <form className="main-form"  action="#" onSubmit={(event) => handleSubmit(event)}>

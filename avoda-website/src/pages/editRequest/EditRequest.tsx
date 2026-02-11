@@ -1,10 +1,15 @@
 import "./EditRequest.css";
 import { useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
-import {employmentValues, experienceValues, frequencyValues, regionsValues} from "../../utils/tools.ts";
+import {
+    employmentValues,
+    experienceValues,
+    frequencyValues,
+    handleChangeArray,
+    regionsValues
+} from "../../utils/tools.ts";
 import {useAppDispatch, useAppSelector} from "../../state/hooks.ts";
 import {requestParamentsSlice} from "../../state/slices/RequestParamentsSlice.ts";
-import {RequestParaments} from "../../utils/types.ts";
 const EditRequest = () => {
     // todo make normal arrayCities
     // TODO УЯЗИМОСТИ ТУТ МОГУТ БЫТЬ
@@ -15,7 +20,7 @@ const EditRequest = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {title,region,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
-    const {setAllParaments,setFieldParaments} = requestParamentsSlice.actions
+    const {setAllParaments} = requestParamentsSlice.actions
     //==================================
 
 
@@ -60,17 +65,7 @@ const EditRequest = () => {
     }
 
 
-    function handleChangeArray(e: React.ChangeEvent<HTMLInputElement>, array: string[],value:string,field:keyof RequestParaments) {
-        const checked = e.target.checked;
 
-        if (checked) {
-            if (!array.includes(value)) {
-                dispatch(setFieldParaments({field, value: [...array, value]}));
-            }
-        } else {
-            dispatch(setFieldParaments({ field, value: array.filter(el => el !== value) }));
-        }
-    }
 
     return (
         <div className="wrapper-request">
@@ -118,7 +113,7 @@ const EditRequest = () => {
                             frequencyValues.map((value)=>
                                 <label className="request-form-frequency request-form-label" key={value.value}>
                                     <input type="checkbox" className="request-form-frequency__inp " name="frequency"
-                                           onChange={(e)=>handleChangeArray(e,payoutFrequency,value.value,"payoutFrequency")}
+                                           onChange={(e)=>handleChangeArray(e,payoutFrequency,value.value,"payoutFrequency",dispatch)}
                                            value={value.value}  checked={payoutFrequency.includes(value.value) } />{value.title}
                                 </label>
                             )
@@ -132,7 +127,7 @@ const EditRequest = () => {
                             experienceValues.map((value)=>
                                 <label className="request-form-experience request-form-label" key={value.value}>
                                     <input type="checkbox" className="request-form-experience__inp " name="experience"
-                                           onChange={(e)=>handleChangeArray(e,experience,value.value,"experience")}
+                                           onChange={(e)=>handleChangeArray(e,experience,value.value,"experience",dispatch)}
                                            value={value.value} checked={experience.includes(value.value)}/>{value.title}
                                 </label>
                             )
@@ -147,7 +142,7 @@ const EditRequest = () => {
                         {
                             employmentValues.map((value)=>
                                 <label className="request-form-employment request-form-label" key={value.value}>
-                                    <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment" onChange={(e)=>handleChangeArray(e,employmentType,value.value,"employmentType")}   value={value.value}  checked={employmentType.includes(value.value)}/>{value.title}
+                                    <input type="checkbox" className="request-form-employment__inp edit-checkbox" name="employment" onChange={(e)=>handleChangeArray(e,employmentType,value.value,"employmentType",dispatch)}   value={value.value}  checked={employmentType.includes(value.value)}/>{value.title}
                                 </label>
                             )
                         }

@@ -14,7 +14,7 @@ export const requestParamentsSlice = createSlice({
     name:"RequestParaments",
     initialState,
     reducers:{
-        setAllParaments:(state,action:PayloadAction<RequestParaments>)=>{
+        setAllParaments:(_state,action:PayloadAction<RequestParaments>)=>{
             return action.payload;
         },
         setFieldParaments: <K extends keyof RequestParaments>(state:RequestParaments, action: PayloadAction<{ field: K; value: RequestParaments[K] }>) => {
