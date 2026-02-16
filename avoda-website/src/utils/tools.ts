@@ -13,6 +13,16 @@ export const handleDocumentClick = (e: MouseEvent,refBurger: React.RefObject<HTM
     }
 };
 
+export const formatToValue = (cities:string[]) =>{
+    if (!cities.length) return [""]
+    return cities
+        .map(city => regionsValues.find(item => item.title === city)?.value)
+        .filter((value): value is string => Boolean(value));
+}
+
+
+
+
 export const regionsValues:ValuesInputRequests[] = [
     { title: "Haifa", value: "haifa" },
     { title: "Tel-aviv", value: "tel-aviv" },

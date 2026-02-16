@@ -59,12 +59,6 @@ const Header = () => {
                 <ul className="menu-list">
                     <li className="menu-list-item">
                         <a href="" className="menu-list__link">
-                            {/*todo add logic*/}
-                            <img src="public/icons/search.png" alt="search" className="menu-list__img" loading="lazy"/>
-                        </a>
-                    </li>
-                    <li className="menu-list-item">
-                        <a href="" className="menu-list__link">
                             <img src="public/icons/coment.png" alt="move to chats" className="menu-list__img" loading="lazy"/>
                         </a>
                     </li>

@@ -12,9 +12,9 @@ import {useAppDispatch, useAppSelector} from "../../state/hooks.ts";
 
 const AsideJobList = () => {
     const dispatch = useAppDispatch();
-    const {title,region,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
+    const {regions,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
 
-
+    //todo how change salary ????
     //todo if change value i need to repeat request to db with new params
     // useEffect(()=>{})
 
@@ -27,7 +27,11 @@ const AsideJobList = () => {
                     {
                         regionsValues.map((city,i) =>
                             <label className="sidebar-regions-label main-sidebar-label"  key={i}>
-                                <input type="checkbox" className="sidebar-regions__inp " name="regions"  value={city.value}/>{city.title}
+                                <input type="checkbox" className="sidebar-regions__inp " name="regions"
+                                       onChange={(e)=>handleChangeArray(e,regions,city.value,"regions",dispatch)}
+                                       value={city.value}
+                                       checked={regions.includes(city.value)}
+                                           />{city.title}
                             </label>
                         )
                     }

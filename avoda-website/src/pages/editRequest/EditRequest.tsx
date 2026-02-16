@@ -3,7 +3,7 @@ import { useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
 import {
     employmentValues,
-    experienceValues,
+    experienceValues, formatToValue,
     frequencyValues,
     handleChangeArray,
     regionsValues
@@ -16,15 +16,16 @@ const EditRequest = () => {
     //==================================
     const [text, setText] = useState("");
     const [filtered, setFiltered] = useState<string[]>([]);
+    const [cities, setCities] = useState<string[]>([]);
     //==============================
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {title,region,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
+    const {title,regions,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
     const {setAllParaments} = requestParamentsSlice.actions
     //==================================
 
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
         const value = e.target.value;
         setText(value);
         if (value.trim() === "") {
@@ -35,21 +36,35 @@ const EditRequest = () => {
             item.value.includes(value)).map(item => item.title);
         setFiltered(result);
     }
+    const  handleSelect = (value: string)=> {
+        console.log(1)
 
-
-    function handleSelect(value: string) {
-        setText(value);
+        setText("");
+        handleSet(value);
         setFiltered([]);
     }
 
+    //==================================================
+    const handleSet = (value: string) => {
+        if(!cities.includes(value)){
+            setCities([...cities, value]);
+        }
+        //todo handleSubmit
+        //todo regions connect to cities
+
+    }
+    //todo
+    const handleRemove = (city:string) => {
+
+    }
+    //==================================================
 
     const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const form = event.currentTarget;
         const title = (form.elements.namedItem("title-job") as HTMLInputElement).value;
-        //todo  will change to string[]
-        const region = (form.elements.namedItem("region") as HTMLInputElement).value;
+        const regions = formatToValue(cities);
         const salary = (form.elements.namedItem("salary") as HTMLInputElement).value;
         const salaryNumber = parseInt(salary) || 0;
         const data = new FormData(event.currentTarget);
@@ -59,11 +74,10 @@ const EditRequest = () => {
         const employmentType = data.getAll("employment").map(v => v.toString());
 
 
-        dispatch(setAllParaments({title,region,salary : salaryNumber,employmentType,experience,payoutFrequency}))
+        dispatch(setAllParaments({title,regions,salary : salaryNumber,employmentType,experience,payoutFrequency}))
 
         navigate("/")
     }
-
 
 
 
@@ -73,7 +87,7 @@ const EditRequest = () => {
                 <h2 className="request-form__title">Find vacation</h2>
 
                 <label className="request-form__title-job title-medium" htmlFor="title-job">Words which need to find</label>
-                <input className="input-edit input-big" type="text" placeholder="title of vacation" id="title-job" defaultValue={title} name="title-job" required/>
+                <input className="input-edit  input-big" type="text" placeholder="title of vacation" id="title-job" defaultValue={title} name="title-job" required/>
                 <br/>
 
 
@@ -81,13 +95,14 @@ const EditRequest = () => {
                     <label htmlFor="region" className="request-form-region__title title-medium">Region/City</label>
 
                     <input
-                        className="input-edit input-big t"
+                        className="input-edit input-edit-regions input-big "
                         type="text"
                         value={text}
                         onChange={handleChange}
                         placeholder="Enter job title"
                         id="region"
                         name="region"
+                        autoComplete="off"
                     />
                     {filtered.length > 0 && (
                         <ul className="autocomplete-list">
@@ -98,6 +113,14 @@ const EditRequest = () => {
                             ))}
                         </ul>
                     )}
+                    <ul className="autocomplete-client">
+                        {cities.map(item => (
+                            <li key={item}  className="autocomplete-client-item" >
+                                {item}
+                                <img onClick={()=>handleRemove(item)} src="../../../public/icons/close.png" className="autocomplete-client-item__img" alt={`remove from your region list ${item}`} loading='lazy' />
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
 

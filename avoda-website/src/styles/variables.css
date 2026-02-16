@@ -53,7 +53,7 @@
 }
 
 .input-big{
-    width: clamp(220px,40.04vw,600px);
+    width: clamp(240px,40.04vw,600px);
     border-radius: var(--border-radius);
     border: 1px solid var(--color-text-gray);
     padding-left: 10px;

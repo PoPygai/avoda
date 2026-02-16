@@ -3,7 +3,7 @@ import {RequestParaments} from "../../utils/types.ts";
 
 const initialState:RequestParaments= {
     title:"",
-    region:"",
+    regions:[],
     salary:0,
     employmentType:[],
     experience:[],

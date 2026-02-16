@@ -59,7 +59,7 @@
 }
 
 @media (max-width: 900px){
-    .menu-list-item:not(:first-child):not(:last-child) {
+    .menu-list-item:not(:last-child) {
         display: none;
     }
 }

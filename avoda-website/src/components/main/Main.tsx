@@ -50,8 +50,10 @@ const Main = () => {
             <form className="main-form"  action="#" onSubmit={(event) => handleSubmit(event)}>
                 <h2 className="form-title " >What kind of job do you want to find?</h2>
                 <input ref={refTitleJob} className="form-inp input-big" name="job"  type="search" placeholder="Enter Job do you want to find?" required minLength={MIN_TITLE} maxLength={MAX_TITLE} />
-                <button className="form-button" onClick={goToEditRequest} type="button"><img className="form-img" src="public/icons/settingsRequire.png" alt="settings of vacation"/></button>
-                <button  className="form-btn btn" type="submit" >Find</button>
+                <div className="main-form__btns">
+                    <button className="form-button settings-btn" onClick={goToEditRequest} type="button"><img className="form-img" src="public/icons/settingsRequire.png" alt="settings of vacation"/></button>
+                    <button  className="form-btn find-btn btn" type="submit" >Find</button>
+                </div>
             </form>
             {visible &&
                 <div className={"main-wrapper"}>

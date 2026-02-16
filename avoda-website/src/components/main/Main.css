@@ -39,6 +39,13 @@
     transition-duration:  0.2s;
     box-shadow: 1px 2px  1px var(--color-text-gray);
 }
+
+.main-form__btns{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
 /*==============================================JOB===============================================*/
 .main-wrapper{
     position: relative;
@@ -77,4 +84,13 @@
 }
 .main-sidebar h4{
     margin-bottom: 6px;
+}
+
+
+@media (max-width: 380px) {
+
+
+    .form-inp {
+        width: 90%;
+    }
 }
