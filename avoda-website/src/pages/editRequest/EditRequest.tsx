@@ -2,69 +2,37 @@ import "./EditRequest.css";
 import { useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
 import {
+    convertToValue,
     employmentValues,
-    experienceValues, formatToValue,
+    experienceValues,
     frequencyValues,
     handleChangeArray,
-    regionsValues
 } from "../../utils/tools.ts";
 import {useAppDispatch, useAppSelector} from "../../state/hooks.ts";
 import {requestParamentsSlice} from "../../state/slices/RequestParamentsSlice.ts";
+import AutoComplete from "../../components/AutoComplete/AutoComplete.tsx";
+
+
 const EditRequest = () => {
-    // todo make normal arrayCities
     // TODO УЯЗИМОСТИ ТУТ МОГУТ БЫТЬ
-    //==================================
-    const [text, setText] = useState("");
-    const [filtered, setFiltered] = useState<string[]>([]);
-    const [cities, setCities] = useState<string[]>([]);
+
+
     //==============================
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {title,regions,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
+    const {title,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
     const {setAllParaments} = requestParamentsSlice.actions
     //==================================
+    const [cities, setCities] = useState<string[]>([]);
 
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        const value = e.target.value;
-        setText(value);
-        if (value.trim() === "") {
-            setFiltered([]);
-            return;
-        }
-        const result = regionsValues.filter(item =>
-            item.value.includes(value)).map(item => item.title);
-        setFiltered(result);
-    }
-    const  handleSelect = (value: string)=> {
-        console.log(1)
-
-        setText("");
-        handleSet(value);
-        setFiltered([]);
-    }
-
-    //==================================================
-    const handleSet = (value: string) => {
-        if(!cities.includes(value)){
-            setCities([...cities, value]);
-        }
-        //todo handleSubmit
-        //todo regions connect to cities
-
-    }
-    //todo
-    const handleRemove = (city:string) => {
-
-    }
-    //==================================================
+    //===================================================================
 
     const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const form = event.currentTarget;
         const title = (form.elements.namedItem("title-job") as HTMLInputElement).value;
-        const regions = formatToValue(cities);
+        const regions = convertToValue(cities);
         const salary = (form.elements.namedItem("salary") as HTMLInputElement).value;
         const salaryNumber = parseInt(salary) || 0;
         const data = new FormData(event.currentTarget);
@@ -90,39 +58,7 @@ const EditRequest = () => {
                 <input className="input-edit  input-big" type="text" placeholder="title of vacation" id="title-job" defaultValue={title} name="title-job" required/>
                 <br/>
 
-
-                <div className="autocomplete-wrapper">
-                    <label htmlFor="region" className="request-form-region__title title-medium">Region/City</label>
-
-                    <input
-                        className="input-edit input-edit-regions input-big "
-                        type="text"
-                        value={text}
-                        onChange={handleChange}
-                        placeholder="Enter job title"
-                        id="region"
-                        name="region"
-                        autoComplete="off"
-                    />
-                    {filtered.length > 0 && (
-                        <ul className="autocomplete-list">
-                            {filtered.map(item => (
-                                <li key={item} onClick={() => handleSelect(item)} className="autocomplete-item" >
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                    <ul className="autocomplete-client">
-                        {cities.map(item => (
-                            <li key={item}  className="autocomplete-client-item" >
-                                {item}
-                                <img onClick={()=>handleRemove(item)} src="../../../public/icons/close.png" className="autocomplete-client-item__img" alt={`remove from your region list ${item}`} loading='lazy' />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
+                <AutoComplete cities={cities} setCities={setCities} nameInp={"input-big"} />
 
                 <br/>
 

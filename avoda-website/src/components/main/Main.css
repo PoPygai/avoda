@@ -85,6 +85,24 @@
 .main-sidebar h4{
     margin-bottom: 6px;
 }
+.main-sidebar label{
+    color: var(--color-text);
+}
+
+.main-sidebar__regions .autocomplete-title{
+    display: block;
+    margin-bottom: 15px;
+}
+
+.main-sidebar__regions .input-small{
+    margin-bottom: 15px;
+}
+.main-sidebar__regions .autocomplete-list{
+    top: 55%;
+    left: 0;
+    width: clamp(200px,15.62vw,300px);
+}
+
 
 
 @media (max-width: 380px) {
@@ -94,3 +112,4 @@
         width: 90%;
     }
 }
+

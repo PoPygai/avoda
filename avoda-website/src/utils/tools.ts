@@ -13,20 +13,31 @@ export const handleDocumentClick = (e: MouseEvent,refBurger: React.RefObject<HTM
     }
 };
 
-export const formatToValue = (cities:string[]) =>{
+export const convertToValue = (cities:string[]) =>{
     if (!cities.length) return [""]
     return cities
         .map(city => regionsValues.find(item => item.title === city)?.value)
         .filter((value): value is string => Boolean(value));
 }
-
+export const convertToTitle = (cities:string[]) =>{
+    if (!cities.length) return [""]
+    return cities
+        .map(city => regionsValues.find(item => item.value === city)?.title)
+        .filter((value): value is string => Boolean(value));
+}
 
 
 
 export const regionsValues:ValuesInputRequests[] = [
     { title: "Haifa", value: "haifa" },
     { title: "Tel-aviv", value: "tel-aviv" },
-    { title: "Akko", value: "akko" }
+    { title: "Akko", value: "akko" },
+    { title: "Jerusalem", value: "jerusalem" },
+    { title: "Tira", value: "tira" },
+    { title: "Ashdot", value: "ashdot" }
+
+
+
 ]
 export const frequencyValues:ValuesInputRequests[] = [
     { title: "Day", value: "day" },

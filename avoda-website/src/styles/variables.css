@@ -60,3 +60,12 @@
 
     height: clamp(48px,4vw,80px);
 }
+.input-small{
+    /*todo*/
+    width: clamp(200px,15.62vw,300px);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-text-gray);
+    padding-left: 10px;
+
+    height: clamp(48px,4vw,80px);
+}

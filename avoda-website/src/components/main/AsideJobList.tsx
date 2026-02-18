@@ -2,15 +2,20 @@ import {
     employmentValues,
     experienceValues,
     frequencyValues,
-    handleChangeArray,
-    regionsValues
+    handleChangeArray, regionsValues,
+
 } from "../../utils/tools.ts";
 import {useAppDispatch, useAppSelector} from "../../state/hooks.ts";
+import {useState} from "react";
+import AutoComplete from "../AutoComplete/AutoComplete.tsx";
 
 
 
 
 const AsideJobList = () => {
+    //==================================
+    const [cities, setCities] = useState<string[]>([]);
+    //==============================
     const dispatch = useAppDispatch();
     const {regions,salary,employmentType,experience,payoutFrequency} = useAppSelector(state => state.requestParaments);
 
@@ -18,23 +23,28 @@ const AsideJobList = () => {
     //todo if change value i need to repeat request to db with new params
     // useEffect(()=>{})
 
+    // <h4 className="sidebar-regions-title title-medium">Regions</h4>
+    // {/*    todo     show only 4-5 cities and under will button More... if click we will see all cities  */}
+    // {
+    //     regionsValues.map((city,i) =>
+    //         <label className="sidebar-regions-label main-sidebar-label"  key={i}>
+    //             <input type="checkbox" className="sidebar-regions__inp " name="regions"
+    //                    onChange={(e)=>handleChangeArray(e,regions,city.value,"regions",dispatch)}
+    //                    value={city.value}
+    //                    checked={regions.includes(city.value)}
+    //             />{city.title}
+    //         </label>
+    //     )
+    // }
+
+
     return (
         <aside className="main-sidebar">
             <form action="#" className="main-sidebar__form">
                 <div className="main-sidebar__regions main-sidebar__containers">
-                    <h4 className="sidebar-regions-title title-medium">Regions</h4>
-                {/*    todo     show only 4-5 cities and under will button More... if click we will see all cities  */}
-                    {
-                        regionsValues.map((city,i) =>
-                            <label className="sidebar-regions-label main-sidebar-label"  key={i}>
-                                <input type="checkbox" className="sidebar-regions__inp " name="regions"
-                                       onChange={(e)=>handleChangeArray(e,regions,city.value,"regions",dispatch)}
-                                       value={city.value}
-                                       checked={regions.includes(city.value)}
-                                           />{city.title}
-                            </label>
-                        )
-                    }
+
+                    <AutoComplete cities={cities} setCities={setCities} nameInp={"input-small"} />
+
                 </div>
                 <div className="main-sidebar__frequency main-sidebar__containers">
                     <h4 className="sidebar-frequency-title title-medium">Payout frequency</h4>
